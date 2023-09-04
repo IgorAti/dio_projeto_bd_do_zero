@@ -70,8 +70,10 @@ on vendas.id_curso = cursos.id_curso
 left join alunos
 on vendas.id_aluno = alunos.id_aluno
 group by nome_aluno
+having valor_gasto_aluno > 1000.00
 order by valor_gasto_aluno desc;
-    
+
+
 -- qual é o aluno com data de matrícula mais antiga (aluno cuja venda foi a mais antiga)
 select
 	alunos.nome_aluno,
@@ -81,7 +83,17 @@ left join alunos
 on vendas.id_aluno = alunos.id_aluno
 order by data_venda;
 
-    
-    
-	
+-- desejo saber qual curso cada aluno faz e há quanto tempo está matriculado
+select
+    alunos.nome_aluno,
+    cursos.nome_curso,
+    avg(datediff('2023-09-04',vendas.data_venda)) as tempo_de_matricula
+from vendas
+left join cursos
+on vendas.id_curso = cursos.id_curso
+left join alunos
+on vendas.id_aluno = alunos.id_aluno
+group by nome_aluno
+order by tempo_de_matricula desc;    
+
 
